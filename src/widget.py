@@ -1,5 +1,6 @@
 from src.masks import get_mask_account, get_mask_card_number
 
+
 def mask_account_card(bank_info: str) -> str:
     """
     Функция, маскирующая информацию как о картах, так и о счетах
@@ -12,7 +13,6 @@ def mask_account_card(bank_info: str) -> str:
 
 
 def get_date(data_string: str) -> str:
-    """ Функция, возвращает строку с датой в формате "ДД.ММ.ГГГГ"
-    """
+    """Функция, возвращает строку с датой в формате "ДД.ММ.ГГГГ" """
 
     return f"{data_string[8:10]}.{data_string[5:7]}.{data_string[:4]}"
