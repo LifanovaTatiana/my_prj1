@@ -36,7 +36,7 @@ def test_mask_card_number_invalid(card_num_invalid):
 
 
 def test_get_mask_account_number(account_number):
-    assert "**3987"
+    assert get_mask_account(account_number) == "**3987"
 
 
 @pytest.mark.parametrize("invalid_account_num", [("123"), (""), ("12345678901234567890123"), ("account.number123456")])
