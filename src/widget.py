@@ -1,3 +1,5 @@
+import re
+
 from src.masks import get_mask_account, get_mask_card_number
 
 
@@ -14,5 +16,12 @@ def mask_account_card(bank_info: str) -> str:
 
 def get_date(data_string: str) -> str:
     """Функция, возвращает строку с датой в формате "ДД.ММ.ГГГГ" """
-
-    return f"{data_string[8:10]}.{data_string[5:7]}.{data_string[:4]}"
+    pattern = r"^\d{4}\-\d{2}\-\d{2}T\d{2}:\d{2}:\d{2}\.\d{6}$"
+    if not bool(re.match(pattern, data_string)):
+        raise ValueError("Неверный формат даты")
+    date = data_string.split("T")[0]
+    date_parts = date.split("-")
+    [year, month, day] = date_parts
+    if int(month) > 12 or int(day) > 31:
+        raise ValueError("Неверная дата")
+    return f"{day}.{month}.{year}"

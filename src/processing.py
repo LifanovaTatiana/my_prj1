@@ -1,9 +1,7 @@
 from typing import Dict, List
 
 
-def filter_by_state(
-    dictionaries: List[Dict[str, str | int]], state: str = "EXECUTED"
-) -> List[Dict[str, str | int]]:
+def filter_by_state(dictionaries: List[Dict[str, str | int]], state: str = "EXECUTED") -> List[Dict[str, str | int]]:
     """Функция выводит список словарей, у которых ключ 'state' соответствует заданному значению"""
 
     filtered_list = []
