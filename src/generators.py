@@ -29,3 +29,15 @@ def filter_by_currency(info_list, currency):
         else:
             raise KeyError("Информация о валюте отсутствует")
 
+
+def transaction_descriptions(info_list):
+    """
+    Функция, выводящая описания операций из списка
+    """
+    if len(info_list) == 0:
+        return []
+
+    for x in info_list:
+        yield x["description"]
+
+
