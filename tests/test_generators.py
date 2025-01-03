@@ -123,4 +123,3 @@ def test_filter_by_currency_with_xlsx_csv(csv_data_result):
         "state": "EXECUTED",
         "to": "Discover 0720428384694643",
     }
-

@@ -292,4 +292,3 @@ def csv_data_result():
             "description": "Перевод с карты на карту",
         },
     ]
-
