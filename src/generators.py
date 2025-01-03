@@ -41,3 +41,26 @@ def transaction_descriptions(info_list):
         yield x["description"]
 
 
+def card_number_generator(start, stop):
+    """
+    Функция, генерирующая номера банковских карт в заданном 16-значном формате
+    """
+    if start > stop:
+
+        raise ValueError("Ошибка: Start не должен превышать Stop")
+
+    else:
+
+        for number in range(start, stop + 1):
+
+            number_str = str(number)
+
+            if len(str(number)) < 16:
+                card_number_not_formatted = "0" * (16 - len(str(number))) + str(number)
+            else:
+                card_number_not_formatted = number_str
+
+            card_number = f"{card_number_not_formatted[:4]} {card_number_not_formatted[4:8]} {card_number_not_formatted[8:12]} {card_number_not_formatted[12:]}"
+
+            yield card_number
+
