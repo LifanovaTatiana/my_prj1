@@ -1,36 +1,51 @@
 from src.decorators import log
 
 
-def test_log():
-    @log()
-    def my_test_func(a, b):
-        return a + b
-
-    assert my_test_func(1, 2) == 3
-    assert my_test_func("a", 2) == "Произошла ошибка"
+@log()
+def my_function(x, y):
+    return x / y
 
 
-def test_log_capsys(capsys):
-    @log()
-    def my_test_func(a, b):
-        return a + b
-
-    my_test_func(1, 2)
-
+def test_log_print(capsys):
+    my_function(10, 5)
     captured = capsys.readouterr()
-    assert "Функция: my_test_func, результат: 3 - всё ОК" in captured.out
-    assert "Время работы функции:" in captured.out
-
-
-def test_log_invalid(capsys):
-    @log()
-    def my_test_func(a, b):
-        return a + b
-
-    my_test_func("a", 2)
-
-    captured = capsys.readouterr()
-    assert (
-        captured.out
-        == """Функция: my_test_func - ERROR: can only concatenate str (not "int") to str with inputs: ('a', 2), {}\n"""
+    expected_output = (
+        'my_function started\n'
+        'my_function ok\n'
+        'my_function finished\n'
     )
+    assert captured.out == expected_output
+
+
+def test_log_print_try(capsys):
+    my_function(10, 0)
+    captured = capsys.readouterr()
+    expected_output = (
+        'my_function started\n'
+        'my_function error: division by zero. Inputs: (10, 0), {}\n'
+    )
+    assert captured.out == expected_output
+
+
+def test_log_print_fail(tmp_path):
+    log_file = tmp_path / "test_output.txt"
+
+    @log(log_file)
+    def my_function(x, y):
+        return x / y
+    my_function(10, 5)
+    with open(log_file, 'r') as f:
+        content = f.read()
+    assert content == 'my_function ok'
+
+
+def test_log_print_fail_try(tmp_path):
+    log_file = tmp_path / "test_output.txt"
+
+    @log(log_file)
+    def my_function(x, y):
+        return x / y
+    my_function(10, 0)
+    with open(log_file, 'r') as f:
+        content = f.read()
+    assert content == 'my_function error: division by zero. Inputs: (10, 0), {}'
